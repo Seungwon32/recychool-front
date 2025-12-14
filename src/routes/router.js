@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 // Layout
 import HeaderAndFooterLayout from "../pages/layout/headerandfooterlayout/HeaderAndFooterLayout";
@@ -6,14 +6,20 @@ import HeaderAndFooterLayout from "../pages/layout/headerandfooterlayout/HeaderA
 // Pages
 import NotFound from "../pages/notfound/NotFound";
 import Search from "../pages/Search";
-import SignUp from "../pages/SignUp";
-import FindUser from "../pages/FindUser";
+import SignUp from "../pages/sign-up/SignUp";
+import FindUser from "../pages/find/FindUser";
 import MyPage from "../pages/MyPage";
 import Reserve from "../pages/Reserve";
 import Payment from "../pages/Payment";
 import Main from "../pages/Main";
 import SignIn from "../pages/sign-in/SignIn";
 import OauthSuccess from "../pages/sign-in/OauthSuccess";
+import FindEmail from "../pages/find/FindEmail";
+import FindPassword from "../pages/find/FindPassword";
+import Verify from "../pages/sign-up/veirfy/Verify";
+import Terms from "../pages/sign-up/Terms";
+import Info from "../pages/sign-up/Info";
+import Complete from "../pages/sign-up/Complete";
 
 
 const router = createBrowserRouter([
@@ -27,7 +33,26 @@ const router = createBrowserRouter([
       },
       {
         path: "sign-up",
-        element: <SignUp />
+        element: <SignUp />,
+        children: [
+          { index: true, element: <Navigate to="verify" replace /> },
+          {
+            path: "verify",
+            element: <Verify />
+          },
+          {
+            path: "terms",
+            element: <Terms />
+          },
+          {
+            path: "info",
+            element: <Info />
+          },
+          {
+            path: "complete",
+            element: <Complete />
+          }
+        ]
       },
       {
         path: "sign-in",
@@ -43,7 +68,17 @@ const router = createBrowserRouter([
       },
       {
         path: "find-user",
-        element: <FindUser />
+        element: <FindUser />,
+        children:[
+          {
+            path: "email",
+            element: <FindEmail />
+          },
+          {
+            path: "password",
+            element: <FindPassword />
+          }
+        ]
       },
       {
         path: "my-page",
@@ -54,7 +89,7 @@ const router = createBrowserRouter([
         element: <Reserve />
       },
       {
-        path: "Payment/:schoolId",
+        path: "payment/:schoolId",
         element: <Payment />
       }
     ],
