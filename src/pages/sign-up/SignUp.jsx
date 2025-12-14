@@ -37,26 +37,26 @@ const SignIn = () => {
         <S.Header>회원가입</S.Header>
       </S.HeaderWrap>
         <S.Tap>
-          <NavLink to={"verify"}  className={({ isActive }) => `${isActive ? "active" : ""}`} onClick={onClick(1)}>
+          <S.Step to={"verify"}  className={({ isActive }) => `${isActive ? "active" : ""}`} onClick={onClick(1)}>
             <S.TapDiv>
               01. 본인확인
             </S.TapDiv>
-          </NavLink>
-          <NavLink to={"terms"} className={({ isActive }) => isActive ? "active" : ""} onClick={onClick(2)}>
+          </S.Step>
+          <S.Step to={"terms"} className={({ isActive }) => isActive ? "active" : ""} onClick={onClick(2)}>
             <S.TapDiv>
               02. 약관 동의
             </S.TapDiv>
-          </NavLink>
-          <NavLink to={"info"} className={({ isActive }) => isActive ? "active" : ""} onClick={onClick(3)}>
+          </S.Step>
+          <S.Step to={"info"} className={({ isActive }) => isActive ? "active" : ""} onClick={onClick(3)}>
             <S.TapDiv>
               03. 정보 입력
             </S.TapDiv>
-          </NavLink>
-          <NavLink to={"complete"} className={({ isActive }) => isActive ? "active" : ""} onClick={onClick(4)}>
+          </S.Step>
+          <S.Step to={"complete"} className={({ isActive }) => isActive ? "active" : ""} onClick={onClick(4)}>
             <S.TapDiv>
               04. 가입 완료
             </S.TapDiv>
-          </NavLink>
+          </S.Step>
         </S.Tap>
         <Outlet />
       </S.LayOut> 

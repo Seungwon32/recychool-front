@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { h3Bold, h5Medium, h6Bold, h6Light, h6Medium } from '../../styles/common';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 const S = {};
 
 S.LayOut = styled.div`
@@ -28,17 +28,45 @@ S.Tap = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #f5f5f5;
+  color: #666666;
   & > .active {
-      border-bottom: solid 2px ${({ theme }) => theme.PALETTE.secondary.blue.main};
+      background-color: ${({ theme }) => theme.PALETTE.primary.green.main};
+      color: #fff;
     }
+  clip-path: polygon(
+    0 0,
+    calc(100% - 17px) 0,
+    100% 50%,
+    calc(100% - 17px) 100%,
+    0 100%
+  );
 `
 S.TapDiv = styled.div`
   width: calc(1160px / 4);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 58px;
+  height: 41px;
   ${h5Medium}
+`
+S.Step = styled(NavLink)`
+  width: calc(1160px / 4);
+  height: 41px;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 17px) 0,
+    100% 50%,
+    calc(100% - 17px) 100%,
+    0 100%
+  );
+`
+S.ChildrenLayOut = styled.div`
+  width: 620px;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: baseline;
 `
 
 export default S;
