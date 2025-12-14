@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 // Layout
 import HeaderAndFooterLayout from "../pages/layout/headerandfooterlayout/HeaderAndFooterLayout";
@@ -35,6 +35,7 @@ const router = createBrowserRouter([
         path: "sign-up",
         element: <SignUp />,
         children: [
+          { index: true, element: <Navigate to="verify" replace /> },
           {
             path: "verify",
             element: <Verify />
