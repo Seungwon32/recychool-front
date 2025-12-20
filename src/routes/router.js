@@ -23,6 +23,7 @@ import Terms from "../pages/sign-up/term/Terms";
 import FindEmailComplete from "../pages/find/find-email/complete/FindEmailComplete";
 import PasswordChange from "../pages/find/find-password/info/PasswordChange";
 import FindPasswordComplete from "../pages/find/find-password/complete/FindPasswordComplete";
+import Movie from "../pages/movie/Movie";
 
 
 const router = createBrowserRouter([

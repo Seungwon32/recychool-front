@@ -18,7 +18,7 @@ const Movie = () => {
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const res = await fetch(`${API}//reservations/movie-schools`);
+        const res = await fetch(`${API}/reservations/movie-schools`);
         const json = await res.json();
         if (!res.ok) throw new Error(json?.message || '학교 목록 조회 실패');
 
@@ -44,7 +44,7 @@ const Movie = () => {
     const fetchRemainingSeats = async () => {
       setCountLoading(true);
       try {
-        const res = await fetch(`/reservations/count/${selectedSchoolId}`);
+        const res = await fetch(`${API}/reservations/count/${selectedSchoolId}`);
         const json = await res.json();
         if (!res.ok) throw new Error(json?.message || '좌석 조회 실패');
 
