@@ -104,6 +104,10 @@ const router = createBrowserRouter([
         element: <MyPage />
       },
       {
+        path: "movie",
+        element: <Movie />
+      },
+      {
         path: "reserve/place/:schoolId",
         element: <Reserve reserveType="PLACE" />
       },
