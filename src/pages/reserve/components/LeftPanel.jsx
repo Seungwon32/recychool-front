@@ -4,20 +4,31 @@ import ReservationCalendar from "./ReservationCalendar";
 const LeftPanel = ({ data, selectedDate, onDateSelect }) => {
   return (
     <S.LeftPanel>
-      {/* 학교명 */}
       <S.Title>{data.schoolName}</S.Title>
 
-      {/* 학교 이미지 */}
-      <S.ImageBox>
-        {/* TODO: 이미지 슬라이더 예정 */}
-      </S.ImageBox>
+    <S.ImageBox>
+      {data.schoolImageName && (
+        <img
+          src={`http://localhost:10000/images/${encodeURIComponent(data.schoolImageName)}`}
+          alt={data.schoolName}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: "12px",
+          }}
+        />
+      )}
+    </S.ImageBox>
 
-      {/* 예약 캘린더 */}
       <S.CalendarBox>
         <ReservationCalendar
           selectedDate={selectedDate}
           onSelectDate={onDateSelect}
+          reserveType={data.reserveType}
           unavailableDates={data.unavailableDates || []}
+          maxCapacity={data.maxParkingCapacity}
+          dateCountMap={data.dateCountMap} 
         />
       </S.CalendarBox>
     </S.LeftPanel>

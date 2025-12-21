@@ -1,18 +1,16 @@
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LeftPanel from "./components/LeftPanel";
 import RightPanel from "./components/RightPanel";
+import ReserveMap from "./components/ReserveMap";
 import S from "./style";
 
-/**
- * 예약 페이지 데이터 조회
- * @returns ApiResponseDTO<SchoolReservePageResponseDTO>
- */
 const fetchReservePage = async ({ queryKey }) => {
-  const [, schoolId, type] = queryKey;
+  const [, schoolId, reserveType] = queryKey;
 
   const res = await fetch(
-    `${process.env.REACT_APP_BACKEND_URL}/api/public/schools/${schoolId}/${type}`
+    `${process.env.REACT_APP_BACKEND_URL}/api/public/schools/${schoolId}/${reserveType.toLowerCase()}`
   );
 
   if (!res.ok) {
@@ -22,26 +20,37 @@ const fetchReservePage = async ({ queryKey }) => {
   return res.json();
 };
 
-const Reserve = () => {
-  const schoolId = 1;
-  const type = "place"; // "parking" 가능
+const Reserve = ({ reserveType }) => {
+  const { schoolId } = useParams();
 
   const [selectedDate, setSelectedDate] = useState(null);
+  const [coord, setCoord] = useState(null);
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["reservePage", schoolId, type],
+    queryKey: ["reservePage", schoolId, reserveType],
     queryFn: fetchReservePage,
   });
 
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
+  const reserveData = data?.data;
 
-  if (isError) {
-    return <div>에러 발생</div>;
-  }
+  useEffect(() => {
+    if (!reserveData?.schoolName) return;
 
-  const reserveData = data.data;
+    fetch("/data/school_lat_lng.json")
+      .then((res) => res.json())
+      .then((list) => {
+        const found = list.find(
+          (item) => item.title === reserveData.schoolName
+        );
+
+        if (found) {
+          setCoord({ lat: found.lat, lng: found.lng });
+        }
+      });
+  }, [reserveData]);
+
+  if (isLoading) return <div>로딩중...</div>;
+  if (isError) return <div>에러 발생</div>;
 
   return (
     <S.Page>
@@ -55,12 +64,16 @@ const Reserve = () => {
 
           <RightPanel
             data={reserveData}
-            type={type}
+            type={reserveType}
             selectedDate={selectedDate}
           />
         </S.ContentRow>
 
-        <S.MapSection />
+        <S.MapSection>
+          {coord && (
+            <ReserveMap lat={coord.lat} lng={coord.lng} />
+          )}
+        </S.MapSection>
       </S.Container>
     </S.Page>
   );

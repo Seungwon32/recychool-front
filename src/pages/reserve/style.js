@@ -36,9 +36,15 @@ S.RightPanel = styled.div`
 /* 지도 */
 S.MapSection = styled.div`
   margin-top: 80px;
-  height: 420px;
+
+  height: 520px;          
+  min-height: 520px;
+
   background-color: ${({ theme }) => theme.PALETTE.neutral.gray.light};
   border-radius: 12px;
+
+  overflow: hidden;      
+  margin-bottom: 120px; 
 `;
 
 /* 이하 기존 그대로 */

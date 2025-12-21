@@ -1,4 +1,5 @@
 import S from "../style";
+import { useNavigate } from "react-router-dom";
 
 // 날짜 포맷 함수
 const formatDate = (date) => {
@@ -7,8 +8,13 @@ const formatDate = (date) => {
 };
 
 const RightPanel = ({ data, type, selectedDate }) => {
-  const isPlace = type === "place";
-  const isParking = type === "parking";
+  const navigate = useNavigate();
+  const apiType = type.toLowerCase();
+
+  const normalizedType = type?.toLowerCase();
+
+  const isPlace = normalizedType === "place";
+  const isParking = normalizedType === "parking";
 
   // 날짜 표시 로직
   const renderDate = () => {
@@ -26,7 +32,53 @@ const RightPanel = ({ data, type, selectedDate }) => {
 
       return `${formatDate(selectedDate)} ~ ${formatDate(endDate)}`;
     }
+
+    return "-";
   };
+
+  const handleReserve = async () => {
+    if (!selectedDate) {
+      alert("날짜를 선택해주세요.");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/private/schools/${data.schoolId}/${apiType}/reserves`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify({
+            startDate: selectedDate.toISOString().slice(0, 10),
+          }),
+        }
+      );
+
+      const text = await res.text();
+      let result = {};
+
+      try {
+        result = text ? JSON.parse(text) : {};
+      } catch (e) {
+        console.error("JSON 파싱 실패:", text);
+      }
+
+      if (!res.ok) {
+        alert(result.message || "예약에 실패했습니다.");
+        return;
+      }
+
+      const reserveId = result.data.reserveId;
+      navigate(`/payment/${reserveId}`);
+
+    } catch (error) {
+      alert("네트워크 오류가 발생했습니다.");
+    }
+  };
+
 
   return (
     <S.RightPanel>
@@ -72,7 +124,9 @@ const RightPanel = ({ data, type, selectedDate }) => {
         <p>{renderDate()}</p>
       </S.InfoRow>
 
-      <S.ReserveButton>예약하기</S.ReserveButton>
+      <S.ReserveButton onClick={handleReserve}>
+        예약하기
+      </S.ReserveButton>
     </S.RightPanel>
   );
 };
