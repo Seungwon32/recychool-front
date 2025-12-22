@@ -8,7 +8,6 @@ import NotFound from "../pages/notfound/NotFound";
 import Search from "../pages/Search";
 import SignUp from "../pages/sign-up/SignUp";
 import FindUser from "../pages/find/FindUser";
-import MyPage from "../pages/MyPage";
 import Reserve from "../pages/reserve/Reserve";
 import Payment from "../pages/payment/Payment";
 import Main from "../pages/main/Main";
@@ -23,6 +22,7 @@ import Terms from "../pages/sign-up/term/Terms";
 import FindEmailComplete from "../pages/find/find-email/complete/FindEmailComplete";
 import PasswordChange from "../pages/find/find-password/info/PasswordChange";
 import FindPasswordComplete from "../pages/find/find-password/complete/FindPasswordComplete";
+import Movie from "../pages/movie/Movie";
 
 
 const router = createBrowserRouter([
@@ -102,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "my-page",
         element: <MyPage />
+      },
+      {
+        path: "movie",
+        element: <Movie />
       },
       {
         path: "reserve/place/:schoolId",
