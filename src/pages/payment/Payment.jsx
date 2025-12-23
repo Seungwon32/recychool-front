@@ -22,12 +22,13 @@ const Payment = () => {
   const user = useMemo(() => {
     return {
       name: reduxUser?.userName ?? "",
-      email: reduxUser?.userEmail ?? "",
-      phone: reduxUser?.userPhone ?? "",
+      email: reduxUser?.userEmail ?? ""
     };
   }, [reduxUser]);
 
   console.log(reduxUser)
+
+
 
 
   const addOneDay = (yyyyMMdd) => {
@@ -153,8 +154,7 @@ const Payment = () => {
         payMethod,
         customer: {
           fullName: user.name,
-          email: user.email,
-          phoneNumber: String(user.phone ?? ""),
+          email: user.email
         },
       };
 
